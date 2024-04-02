@@ -2,6 +2,7 @@
 #include "stm32f4xx_hal.h"
 
 #include "Terminal.h"
+#include "Rcc.h"
 
 void cmsisLedoN()
 {
@@ -12,33 +13,16 @@ void cmsisLedoN()
 
 int main()
 {
-    // Terminal::instance()->sendMessage("Hello \r\n");
+    Rcc::instance()->enableMaxClockSpeed();
     cmsisLedoN();
+
     while (true)
     {
-        Terminal::instance()->sendMessage("Hello \r\n");
+        Terminal::instance()->sendMessage("YEAH \r\n");
         GPIOD->ODR ^= GPIO_ODR_OD12;
         for (volatile int i = 0; i < 1000000; i++)
         {
         }
     }
     return 0;
-}
-
-void halLedOn()
-{
-    __HAL_RCC_GPIOD_CLK_ENABLE();
-    GPIO_InitTypeDef led = {};
-    led.Pin = GPIO_PIN_12;
-    led.Mode = GPIO_MODE_OUTPUT_PP;
-    HAL_GPIO_Init(GPIOD, &led);
-    HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
-}
-
-void cmssRCC()
-{
-    RCC->CR |= RCC_CR_HSEON;
-    while (!(RCC->CR & RCC_CR_HSERDY))
-    {
-    }
 }
