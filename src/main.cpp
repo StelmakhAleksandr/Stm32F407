@@ -3,6 +3,7 @@
 
 #include "Terminal.h"
 #include "Rcc.h"
+#include "SystemTimer.h"
 
 void cmsisLedoN()
 {
@@ -16,13 +17,12 @@ int main()
     Rcc::instance()->enableMaxClockSpeed();
     cmsisLedoN();
 
+    int n = 0;
     while (true)
     {
-        Terminal::instance()->sendMessage("YEAH \r\n");
-        GPIOD->ODR ^= GPIO_ODR_OD12;
-        for (volatile int i = 0; i < 1000000; i++)
-        {
-        }
+        std::string msg = "YEAH " + std::to_string(n++) + "\r\n";
+        Terminal::instance()->sendMessage(msg);
+        SystemTimer::instance()->delay(1000);
     }
     return 0;
 }
