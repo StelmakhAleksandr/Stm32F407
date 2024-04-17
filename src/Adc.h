@@ -12,6 +12,7 @@ class Adc
 public:
     uint32_t value();
     static Adc *instance();
+    void start();
 
 private:
     Adc();

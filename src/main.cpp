@@ -22,8 +22,9 @@ int main()
     int n = 0;
     while (true)
     {
-        auto adc = Adc::instance()->value();
-        std::string msg = "YEAH " + std::to_string(n++) + " adc = " + std::to_string(adc) + "\r\n";
+        // auto adc = Adc::instance()->value();
+        std::string msg = "YEAH " + std::to_string(n++) + "\r\n";
+        Adc::instance()->start();
         Terminal::instance()->sendMessage(msg);
         SystemTimer::instance()->delay(1000);
     }

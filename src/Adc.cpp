@@ -32,8 +32,11 @@ Adc::Adc()
     ADC1->SQR3 = 0;
     ADC1->CR1 |= ADC_CR1_EOCIE;
     ADC1->SR &= ~ADC_SR_EOC;
-    ADC1->CR2 |= ADC_CR2_ADON | ADC_CR2_CONT;
-    ADC1->CR2 |= ADC_CR2_SWSTART;
+}
+
+void Adc::start()
+{
+    ADC1->CR2 |= ADC_CR2_ADON | ADC_CR2_SWSTART;
 }
 
 uint32_t Adc::value()
@@ -48,5 +51,5 @@ void Adc::setValue(uint32_t value)
     //      return;
     //  }
     m_value = value;
-    // Terminal::instance()->sendMessage("New ADC value = " + std::to_string(m_value) + "\r\n");
+    Terminal::instance()->sendMessage("New ADC value = " + std::to_string(m_value) + "\r\n");
 }
