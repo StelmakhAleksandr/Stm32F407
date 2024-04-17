@@ -4,6 +4,7 @@
 #include "Terminal.h"
 #include "Rcc.h"
 #include "SystemTimer.h"
+#include "Adc.h"
 
 void cmsisLedoN()
 {
@@ -16,11 +17,13 @@ int main()
 {
     Rcc::instance()->enableMaxClockSpeed();
     cmsisLedoN();
+    Adc::instance();
 
     int n = 0;
     while (true)
     {
-        std::string msg = "YEAH " + std::to_string(n++) + "\r\n";
+        auto adc = Adc::instance()->value();
+        std::string msg = "YEAH " + std::to_string(n++) + " adc = " + std::to_string(adc) + "\r\n";
         Terminal::instance()->sendMessage(msg);
         SystemTimer::instance()->delay(1000);
     }
